@@ -1,0 +1,47 @@
+/* --- Variables & Brand Identity --- */
+:root {
+  --primary-blue: #00B4D8;
+  --accent-lime: #A2FF00;
+  --action-orange: #FF3B00;
+  --dark-navy: #0B1B3D;
+  --card-glass-bg: rgba(255, 255, 255, 0.85);
+  --font-heading: 'Montserrat', sans-serif;
+  --font-body: 'Inter', sans-serif;
+}
+
+/* --- Global Reset & Body --- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* body {
+  font-family: var(--font-body);
+  background: radial-gradient(circle at center, #00C4E6 0%, #0096B4 100%);
+  color: #ffffff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+} */
+
+body {
+  font-family: var(--font-body);
+  /* Effetto luce centrale vibrante */
+  background: radial-gradient(circle at 50% 30%, #00d2ff 0%, #00a4cc 40%, #007a99 100%);
+  background-attachment: fixed;
+  color: #ffffff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
