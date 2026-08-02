@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iscrizione - Romagna Wild Trail 2026</title>
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@700;800;900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/navbar.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/pages/form.css">
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <header class="site-header">
+    <div class="container navbar">
+      <a href="index.html" class="brand">
+        <img src="assets/images/logo.png" alt="RWR Logo">
+        <div class="brand-text">
+          <span class="brand-title">RWR</span>
+          <span class="brand-subtitle">Romagna Wild Trail</span>
+        </div>
+      </a>
+
+      <button class="menu-toggle" aria-label="Apri Menu">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+
+      <ul class="nav-menu">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="regolamento.html" class="nav-link">Info & Regolamento</a></li>
+        <li><a href="iscrizione.html" class="nav-link active">Iscriviti</a></li>
+        <li><a href="iscritti.html" class="nav-link">Iscritti</a></li>
+        <li><a href="gallery.html" class="nav-link">Gallery</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- Content -->
+  <main class="container">
+    <div class="page-header" style="text-align: center; margin: 40px 0 30px;">
+      <h1 style="font-family: var(--font-heading); font-size: 2.5rem; text-transform: uppercase;">Modulo di Iscrizione
+      </h1>
+      <p style="color: #e0e0e0;">Compila i campi sottostanti per riservare il tuo posto alla 2° edizione</p>
+    </div>
+
+    <div class="form-card">
+      <div id="feedbackMessage" class="form-feedback"></div>
+
+      <form id="registrationForm">
+        <div class="form-grid">
+
+          <!-- Nome -->
+          <div class="form-group">
+            <label for="first_name"><i class="fa-solid fa-user"></i> Nome <span class="required">*</span></label>
+            <input type="text" id="first_name" name="first_name" class="form-control" placeholder="Mario" required>
+          </div>
+
+          <!-- Cognome -->
+          <div class="form-group">
+            <label for="last_name"><i class="fa-solid fa-user"></i> Cognome <span class="required">*</span></label>
+            <input type="text" id="last_name" name="last_name" class="form-control" placeholder="Rossi" required>
+          </div>
+
+          <!-- Data di Nascita con range limitato -->
+          <div class="form-group">
+            <label for="birth_date"><i class="fa-solid fa-calendar-days"></i> Data di Nascita <span
+                class="required">*</span></label>
+            <input type="date" id="birth_date" name="birth_date" class="form-control" required>
+          </div>
+
+          <!-- Telefono (OBBLIGATORIO) -->
+          <div class="form-group">
+            <label for="phone"><i class="fa-solid fa-phone"></i> Telefono / WhatsApp <span
+                class="required">*</span></label>
+            <input type="tel" id="phone" name="phone" class="form-control" placeholder="333 1234567" required>
+          </div>
+
+          <!-- Email (OPZIONALE) -->
+          <div class="form-group">
+            <label for="email"><i class="fa-solid fa-envelope"></i> Email <small
+                style="font-weight: 400; color: #aaa;">(opzionale)</small></label>
+            <input type="email" id="email" name="email" class="form-control" placeholder="mario.rossi@email.com">
+          </div>
+
+          <!-- Squadra -->
+          <div class="form-group">
+            <label for="team"><i class="fa-solid fa-users"></i> Squadra / Team <small
+                style="font-weight: 400; color: #aaa;">(opzionale)</small></label>
+            <input type="text" id="team" name="team" class="form-control" placeholder="Rubicone for Sport – Marianna Trail">
+          </div>
+
+          <!-- Categoria Percorso -->
+          <div class="form-group full-width">
+            <label><i class="fa-solid fa-route"></i> Scegli il Percorso <span class="required">*</span></label>
+            <div class="radio-group">
+              <div class="radio-card">
+                <input type="radio" id="p5k" name="category_event" value="5K (+300m)" required checked>
+                <label for="p5k" class="radio-label">
+                  <span class="radio-title">5K</span>
+                  <span class="radio-desc">+300m D+ (Camminata)</span>
+                </label>
+              </div>
+
+              <div class="radio-card">
+                <input type="radio" id="p9k" name="category_event" value="9K (+500m)">
+                <label for="p9k" class="radio-label">
+                  <span class="radio-title">9K</span>
+                  <span class="radio-desc">+500m D+ (Trail/Walk)</span>
+                </label>
+              </div>
+
+              <div class="radio-card">
+                <input type="radio" id="p15k" name="category_event" value="15K (+700m)">
+                <label for="p15k" class="radio-label">
+                  <span class="radio-title">15K</span>
+                  <span class="radio-desc">+700m D+ (Trail Race)</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Modalità di Pagamento con Placeholder -->
+          <div class="form-group full-width">
+            <label for="payment_method"><i class="fa-solid fa-wallet"></i> Modalità di Pagamento Preferita <span
+                class="required">*</span></label>
+            <select id="payment_method" name="payment_method" class="form-control" required>
+              <option value="" disabled selected>Seleziona una modalità di pagamento</option>
+              <option value="Satispay">Satispay</option>
+              <option value="Bonifico">Bonifico Bancario</option>
+            </select>
+          </div>
+
+          <!-- Note -->
+          <div class="form-group full-width">
+            <label for="notes"><i class="fa-solid fa-comment"></i> Note per l'organizzazione</label>
+            <textarea id="notes" name="notes" class="form-control" rows="3"
+              placeholder="Intolleranze, segnalazioni particolari..."></textarea>
+          </div>
+
+          <!-- Accettazione Regolamento -->
+          <div class="form-group full-width">
+            <div class="checkbox-group">
+              <input type="checkbox" id="terms" required>
+              <label for="terms" style="font-weight: 400;">
+                Dichiaro di aver letto il <a href="regolamento.html" target="_blank"
+                  style="color: var(--accent-lime); text-decoration: underline;">Regolamento</a> e di essere in stato di
+                buona salute idoneo all'attività ludico-motoria. <span class="required">*</span>
+              </label>
+            </div>
+          </div>
+
+        </div>
+
+        <button type="submit" id="btnSubmit" class="btn btn-primary"
+          style="width: 100%; margin-top: 20px; padding: 16px; font-size: 1.1rem;">
+          Conferma Iscrizione
+        </button>
+      </form>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <img src="assets/images/logo.png" alt="RWR Logo" height="35">
+        </div>
+        <div class="footer-patronage">
+          <span>Patrocinio:</span> <strong>UISP Rimini</strong>
+        </div>
+        <div class="footer-contacts">
+          <a href="https://wa.me/393517077545" target="_blank"><i class="fa-brands fa-whatsapp"></i> 3517077545</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Supabase JS Client & Script -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/js/config/supabase.js"></script>
+  <script src="assets/js/components/navbar.js"></script>
+  <script src="assets/js/pages/form.js"></script>
+</body>
+
+</html>
