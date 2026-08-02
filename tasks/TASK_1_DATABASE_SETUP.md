@@ -29,10 +29,6 @@ CREATE TABLE public.registrations (
 -- Abilita RLS (Row Level Security)
 ALTER TABLE public.registrations ENABLE ROW LEVEL SECURITY;
 
--- Policy: Lettura pubblica limitata (o totale, filtrata via codice)
-CREATE POLICY "Permetti lettura pubblica" ON public.registrations 
-FOR SELECT USING (true);
-
 -- Policy: Inserimento pubblico (chiunque può registrarsi)
 CREATE POLICY "Permetti inserimento pubblico" ON public.registrations 
 FOR INSERT WITH CHECK (true);
@@ -40,4 +36,12 @@ FOR INSERT WITH CHECK (true);
 -- Policy: Modifica ed eliminazione riservate ad utenti autenticati (Admin)
 CREATE POLICY "Gestione completa agli Admin" ON public.registrations 
 FOR ALL USING (auth.role() = 'authenticated');
+
+-- Vista pubblica per la pagina iscritti.html (protegge i dati sensibili)
+CREATE VIEW public_iscritti AS
+  SELECT first_name, last_name, team, category_event, payment_method, status
+  FROM registrations;
+
+GRANT SELECT ON public_iscritti TO anon;
+GRANT SELECT ON public_iscritti TO authenticated;
 

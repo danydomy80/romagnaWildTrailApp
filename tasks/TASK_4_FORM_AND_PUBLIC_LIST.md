@@ -28,7 +28,7 @@ Form responsivo con campi:
   * Mostrare un feedback di successo/errore visivo pulito senza ricaricare la pagina.
 
 ## 2. Pagina Elenco Pubblico (`iscritti.html`)
-* Tabella/Card che preleva i dati da Supabase.
+* Tabella/Card che preleva i dati dalla vista `public_iscritti` su Supabase.
 * **Campi mostrati pubblicamente:** Nome, Cognome, Squadra, Percorso (5K/9K/15K), Stato Pagamento (`In Attesa` [Giallo], `Confermato` [Verde]).
 * *Nota:* Nascondere Email, Telefono e Data di nascita per privacy.
 * Campo di ricerca rapida JS per cercare per Nome, Cognome, Squadra, Percorso.

@@ -33,6 +33,9 @@ Tabella `registrations`:
 * `status` (text, default: 'in_attesa') -> Opzioni: "in_attesa", "confermata", "annullata"
 * `notes` (text)
 
+Vista Pubblica `public_iscritti` (per la pagina `iscritti.html`):
+* `first_name`, `last_name`, `team`, `category_event`, `payment_method`, `status`
+
 ## 5. Struttura delle Directory
 ```text
 /
