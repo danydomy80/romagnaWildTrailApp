@@ -9,8 +9,8 @@ Form responsivo con campi:
 * **Nome** (text, required)
 * **Cognome** (text, required)
 * **Data di Nascita** (date, required)
-* **Email** (email, required)
-* **Telefono** (tel)
+* **Email** (email)
+* **Telefono** (tel, required)
 * **Squadra / Team** (text)
 * **Percorso / Categoria** (select/radio, required):
   * `5K (+300m D+)`
