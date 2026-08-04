@@ -1,0 +1,136 @@
+.iscritti-header {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.admin-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--action-orange);
+  color: #fff;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-top: 10px;
+}
+
+.filter-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.search-box {
+  position: relative;
+  flex: 1;
+  min-width: 280px;
+}
+
+.search-box i {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 12px 15px 12px 42px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(11, 27, 61, 0.6);
+  color: #fff;
+  font-size: 0.95rem;
+}
+
+.stats-box {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  color: #fff;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: 10px;
+  background: rgba(11, 27, 61, 0.8);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.iscritti-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  color: #fff;
+}
+
+.iscritti-table th,
+.iscritti-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.iscritti-table th {
+  background: rgba(0, 0, 0, 0.3);
+  color: var(--accent-lime);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 0.5px;
+}
+
+.badge-status {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.badge-status.confermata {
+  background: #198754;
+  color: #fff;
+}
+
+.badge-status.in_attesa {
+  background: #ffc107;
+  color: #000;
+}
+
+.badge-status.annullata {
+  background: #dc3545;
+  color: #fff;
+}
+
+.select-status-admin {
+  background: #0b1b3d;
+  color: #fff;
+  border: 1px solid var(--accent-lime);
+  padding: 4px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-delete {
+  background: #dc3545;
+  color: #fff;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.btn-delete:hover {
+  opacity: 0.8;
+}

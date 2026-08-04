@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Elenco Iscritti - Romagna Wild Trail 2026</title>
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@700;800;900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/navbar.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/pages/iscritti.css">
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <header class="site-header">
+    <div class="container navbar">
+      <a href="index.html" class="brand">
+        <img src="assets/images/logo.png" alt="RWR Logo">
+        <div class="brand-text">
+          <span class="brand-title">RWR</span>
+          <span class="brand-subtitle">Romagna Wild Race</span>
+        </div>
+      </a>
+
+      <button class="menu-toggle" aria-label="Apri Menu">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+
+      <ul class="nav-menu">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="regolamento.html" class="nav-link">Info & Regolamento</a></li>
+        <li><a href="iscrizione.html" class="nav-link">Iscriviti</a></li>
+        <li><a href="iscritti.html" class="nav-link active">Iscritti</a></li>
+        <li><a href="gallery.html" class="nav-link">Gallery</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- Content -->
+  <main class="container page-content">
+    <header class="iscritti-header" style="text-align: center; margin: 40px 0 30px;">
+      <h1 style="font-family: var(--font-heading); font-size: 2.5rem; text-transform: uppercase;">
+        <i class="fa-solid fa-users"></i> Elenco Iscritti
+      </h1>
+      <p style="color: #e0e0e0;">Verifica l'elenco dei partecipanti e lo stato delle iscrizioni</p>
+
+      <!-- Badge Modalità Visore Admin -->
+      <div id="admin-badge" class="admin-badge" style="display: none;">
+        <i class="fa-solid fa-user-shield"></i> Modalità Amministratore Attiva
+      </div>
+    </header>
+
+    <!-- Barra Ricerca e Filtri -->
+    <div class="filter-bar">
+      <div class="search-box">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="searchInput" placeholder="Cerca per nome, cognome o squadra...">
+      </div>
+      <div class="stats-box">
+        Totale Iscritti: <strong id="totalCount">0</strong>
+      </div>
+    </div>
+
+    <!-- Contenitore Tabella -->
+    <div class="table-responsive">
+      <table class="iscritti-table">
+        <thead>
+          <tr id="tableHead">
+            <th>Atleta</th>
+            <th>Squadra</th>
+            <th>Percorso</th>
+            <th>Pagamento</th>
+            <th>Stato</th>
+            <!-- Le colonne Admin verranno inserite dinamicamente via JS se autenticato -->
+          </tr>
+        </thead>
+        <tbody id="iscrittiList">
+          <tr>
+            <td colspan="5" class="text-center">Caricamento elenco in corso...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <img src="assets/images/logo.png" alt="RWR Logo" height="80">
+        </div>
+
+        <div class="footer-patronage">
+          <span>Patrocinio:</span>
+          <strong>UISP Rimini</strong>
+        </div>
+
+        <div class="footer-contacts">
+          <a href="https://wa.me/393517077545" target="_blank">
+            <i class="fa-brands fa-whatsapp"></i> 3517077545
+          </a>
+          <a href="mailto:romagnawr@gmail.com">
+            <i class="fa-regular fa-envelope"></i> romagnawr@gmail.com
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <a href="admin-login.html" class="admin-link">[Admin Login]</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Supabase CDN e Script -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/js/config/supabase.js"></script>
+  <script src="assets/js/components/navbar.js"></script>
+  <script src="assets/js/pages/iscritti.js"></script>
+</body>
+
+</html>
