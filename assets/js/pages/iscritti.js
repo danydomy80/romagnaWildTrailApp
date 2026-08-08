@@ -8,13 +8,37 @@ document.addEventListener('DOMContentLoaded', async () => {
   let allData = [];
   let isAdmin = false;
 
-  // 1. Verifica se l'utente è autenticato come Admin
-  const { data: { session } } = await supabaseClient.auth.getSession();
+  // 1. Verifica sessione Admin (usiamo authService se disponibile, altrimenti supabaseClient)
+  let session = null;
+  if (typeof authService !== 'undefined') {
+    session = await authService.getSession();
+  } else {
+    const response = await supabaseClient.auth.getSession();
+    session = response.data.session;
+  }
+
   isAdmin = !!session;
 
   if (isAdmin) {
+    // Mostra il badge Admin con il pulsante di Logout
+    adminBadge.innerHTML = `
+      <i class="fa-solid fa-user-shield"></i> Modalità Amministratore Attiva
+      <button id="btnLogout" style="margin-left: 10px; background: transparent; border: 1px solid #fff; color: #fff; padding: 2px 8px; border-radius: 4px; cursor: pointer; font-size: 0.75rem;">
+        <i class="fa-solid fa-right-from-bracket"></i> Esci
+      </button>
+    `;
     adminBadge.style.display = 'inline-flex';
-    // Aggiunge le colonne Admin riservate
+
+    // Handler pulsante Logout
+    document.getElementById('btnLogout').addEventListener('click', () => {
+      if (typeof authService !== 'undefined') {
+        authService.logout();
+      } else {
+        supabaseClient.auth.signOut().then(() => window.location.reload());
+      }
+    });
+
+    // Aggiunge colonne riservate Admin
     tableHead.innerHTML += `
       <th>Contatti</th>
       <th>Azioni</th>

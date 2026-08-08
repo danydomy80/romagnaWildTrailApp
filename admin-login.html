@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login - Romagna Wild Trail 2026</title>
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@700;800;900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/navbar.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/pages/form.css">
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <header class="site-header">
+    <div class="container navbar">
+      <a href="index.html" class="brand">
+        <img src="assets/images/logo.png" alt="RWR Logo">
+        <div class="brand-text">
+          <span class="brand-title">RWR</span>
+          <span class="brand-subtitle">Romagna Wild Race</span>
+        </div>
+      </a>
+
+      <button class="menu-toggle" aria-label="Apri Menu">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+
+      <ul class="nav-menu">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="regolamento.html" class="nav-link">Info & Regolamento</a></li>
+        <li><a href="iscrizione.html" class="nav-link">Iscriviti</a></li>
+        <li><a href="iscritti.html" class="nav-link">Iscritti</a></li>
+        <li><a href="gallery.html" class="nav-link">Gallery</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container">
+    <div class="page-header" style="text-align: center; margin: 40px 0 30px;">
+      <h1 style="font-family: var(--font-heading); font-size: 2.2rem; text-transform: uppercase;">
+        <i class="fa-solid fa-user-shield" style="color: var(--accent-lime);"></i> Area Riservata
+      </h1>
+      <p style="color: #e0e0e0;">Accedi con le tue credenziali da organizzatore</p>
+    </div>
+
+    <div class="form-card" style="max-width: 450px; margin: 0 auto 60px;">
+      <div id="loginFeedback" class="form-feedback"></div>
+
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="email"><i class="fa-solid fa-envelope"></i> Email Admin</label>
+          <input type="email" id="email" class="form-control" placeholder="admin@evento.com" required>
+        </div>
+
+        <div class="form-group">
+          <label for="password"><i class="fa-solid fa-key"></i> Password</label>
+          <input type="password" id="password" class="form-control" placeholder="••••••••" required>
+        </div>
+
+        <button type="submit" id="btnLogin" class="btn btn-primary"
+          style="width: 100%; margin-top: 15px; padding: 14px;">
+          Accedi al Pannello
+        </button>
+      </form>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <img src="assets/images/logo.png" alt="RWR Logo" height="80">
+        </div>
+        <div class="footer-patronage">
+          <span>Patrocinio:</span> <strong>UISP Rimini</strong>
+        </div>
+        <div class="footer-contacts">
+          <a href="https://wa.me/393517077545" target="_blank"><i class="fa-brands fa-whatsapp"></i> 3517077545</a>
+          <a href="mailto:romagnawr@gmail.com"><i class="fa-regular fa-envelope"></i> romagnawr@gmail.com</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Script SDK & App -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/js/config/supabase.js"></script>
+  <script src="assets/js/services/authService.js"></script>
+  <script src="assets/js/components/navbar.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      // Se è già autenticato, reindirizza direttamente a iscritti.html
+      const session = await authService.getSession();
+      if (session) {
+        window.location.href = 'iscritti.html';
+        return;
+      }
+
+      const loginForm = document.getElementById('loginForm');
+      const btnLogin = document.getElementById('btnLogin');
+      const feedback = document.getElementById('loginFeedback');
+
+      loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        btnLogin.disabled = true;
+        btnLogin.innerText = 'Verifica in corso...';
+        feedback.style.display = 'none';
+
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value;
+
+        try {
+          await authService.login(email, password);
+          // Redirect a iscritti.html con privilegi da Admin sbloccati
+          window.location.href = 'iscritti.html';
+        } catch (err) {
+          console.error('Errore Login:', err);
+          feedback.innerText = '❌ Credenziali errate o utente non autorizzato.';
+          feedback.className = 'form-feedback error';
+          feedback.style.display = 'block';
+        } finally {
+          btnLogin.disabled = false;
+          btnLogin.innerText = 'Accedi al Pannello';
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>
