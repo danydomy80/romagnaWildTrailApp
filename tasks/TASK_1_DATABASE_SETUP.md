@@ -29,19 +29,34 @@ CREATE TABLE public.registrations (
 -- Abilita RLS (Row Level Security)
 ALTER TABLE public.registrations ENABLE ROW LEVEL SECURITY;
 
--- Policy: Inserimento pubblico (chiunque può registrarsi)
-CREATE POLICY "Permetti inserimento pubblico" ON public.registrations 
-FOR INSERT WITH CHECK (true);
+-- Policy 1: Inserimento consentito al pubblico (anon e authenticated)
+CREATE POLICY "Permetti inserimento pubblico" 
+ON public.registrations 
+FOR INSERT 
+TO anon, authenticated
+WITH CHECK (true);
 
--- Policy: Modifica ed eliminazione riservate ad utenti autenticati (Admin)
-CREATE POLICY "Gestione completa agli Admin" ON public.registrations 
-FOR ALL USING (auth.role() = 'authenticated');
+-- Policy 2: Lettura consentita per la query sottostante la Vista Pubblica
+CREATE POLICY "Permetti lettura per vista" 
+ON public.registrations 
+FOR SELECT 
+TO anon, authenticated 
+USING (true);
 
--- Vista pubblica per la pagina iscritti.html (protegge i dati sensibili)
-CREATE VIEW public_iscritti AS
+-- Policy 3: Gestione completa riservata agli Admin autenticati (Ottimizzata per le performance)
+CREATE POLICY "Gestione completa agli Admin" 
+ON public.registrations 
+FOR ALL 
+TO authenticated
+USING ((SELECT auth.role()) = 'authenticated')
+WITH CHECK ((SELECT auth.role()) = 'authenticated');
+
+-- Vista pubblica per la pagina iscritti.html (In modalità SECURITY INVOKER per la massima sicurezza)
+CREATE VIEW public.public_iscritti 
+WITH (security_invoker = true) AS
   SELECT first_name, last_name, team, category_event, payment_method, status
-  FROM registrations;
+  FROM public.registrations;
 
-GRANT SELECT ON public_iscritti TO anon;
-GRANT SELECT ON public_iscritti TO authenticated;
+GRANT SELECT ON public.public_iscritti TO anon;
+GRANT SELECT ON public.public_iscritti TO authenticated;
 
