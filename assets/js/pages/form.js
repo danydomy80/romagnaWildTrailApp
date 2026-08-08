@@ -48,6 +48,16 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Raccogli i dati dal Form
     const formData = new FormData(form);
+
+    const checkField = formData.get('user_address');
+    if (checkField && checkField.trim() !== '') {
+      feedbackMsg.innerText = '🎉 Iscrizione avvenuta con successo! Ti aspettiamo a Talamello.';
+      feedbackMsg.className = 'form-feedback success';
+      feedbackMsg.style.display = 'block';
+      form.reset();
+      return;
+    }
+
     const data = {
       first_name: formData.get('first_name').trim(),
       last_name: formData.get('last_name').trim(),

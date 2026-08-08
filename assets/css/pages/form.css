@@ -74,6 +74,18 @@
   color: #ffffff;
 }
 
+.field-check-wrap {
+  opacity: 0;
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+  height: 0;
+  width: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
 /* Radio buttons / Card Selezione Percorso */
 .radio-group {
   display: grid;
