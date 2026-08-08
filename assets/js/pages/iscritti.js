@@ -54,8 +54,21 @@ document.addEventListener('DOMContentLoaded', async () => {
   function renderTable(data) {
     totalCount.innerText = data.length;
 
+    // Messaggio dinamico con Call To Action in caso di tabella vuota
     if (data.length === 0) {
-      iscrittiList.innerHTML = `<tr><td colspan="${isAdmin ? 7 : 5}" class="text-center">Nessun iscritto trovato.</td></tr>`;
+      iscrittiList.innerHTML = `
+        <tr>
+          <td colspan="${isAdmin ? 7 : 5}" style="padding: 40px 20px; text-align: center;">
+            <div style="font-size: 1.1rem; margin-bottom: 15px; color: #e0e0e0;">
+              <i class="fa-solid fa-flag-checkered" style="font-size: 2rem; color: var(--accent-lime); margin-bottom: 10px; display: block;"></i>
+              Non ci sono ancora iscritti per questo evento.
+            </div>
+            <a href="iscrizione.html" class="btn btn-primary" style="display: inline-block; padding: 10px 24px; font-size: 0.95rem;">
+              <i class="fa-solid fa-bolt"></i> Puoi essere il primo, che aspetti!
+            </a>
+          </td>
+        </tr>
+      `;
       return;
     }
 
