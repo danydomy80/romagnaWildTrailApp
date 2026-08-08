@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   let allData = [];
   let isAdmin = false;
 
-  // 1. Verifica sessione Admin (usiamo authService se disponibile, altrimenti supabaseClient)
+  // 1. Verifica sessione Admin
   let session = null;
   if (typeof authService !== 'undefined') {
     session = await authService.getSession();
@@ -47,6 +47,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // 2. Caricamento dati dal Database
   async function loadIscritti() {
+    iscrittiList.innerHTML = `<tr><td colspan="${isAdmin ? 7 : 5}" class="text-center" style="padding: 30px;">Caricamento elenco in corso...</td></tr>`;
     let query;
 
     if (isAdmin) {
@@ -64,35 +65,71 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const { data, error } = await query;
 
+    // SCENARIO 1: Errore di connessione / Database
     if (error) {
       console.error('Errore nel caricamento iscritti:', error);
-      iscrittiList.innerHTML = `<tr><td colspan="${isAdmin ? 7 : 5}" class="text-center">Errore nel caricamento dei dati.</td></tr>`;
+      totalCount.innerText = '0';
+      iscrittiList.innerHTML = `
+        <tr>
+          <td colspan="${isAdmin ? 7 : 5}" style="padding: 40px 20px; text-align: center;">
+            <div style="color: #ff6b6b; font-size: 1.1rem; margin-bottom: 12px;">
+              <i class="fa-solid fa-circle-exclamation" style="font-size: 2rem; margin-bottom: 8px; display: block;"></i>
+              Si è verificato un errore nel caricamento dei dati.
+            </div>
+            <button onclick="window.location.reload()" class="btn btn-secondary" style="padding: 8px 18px; font-size: 0.85rem;">
+              <i class="fa-solid fa-rotate-right"></i> Riprova
+            </button>
+          </td>
+        </tr>
+      `;
       return;
     }
 
     allData = data || [];
-    renderTable(allData);
+    renderTable(allData, false);
   }
 
   // 3. Rendering della tabella
-  function renderTable(data) {
+  function renderTable(data, isFiltering = false) {
     totalCount.innerText = data.length;
 
-    // Messaggio dinamico con Call To Action in caso di tabella vuota
     if (data.length === 0) {
-      iscrittiList.innerHTML = `
-        <tr>
-          <td colspan="${isAdmin ? 7 : 5}" style="padding: 40px 20px; text-align: center;">
-            <div style="font-size: 1.1rem; margin-bottom: 15px; color: #e0e0e0;">
-              <i class="fa-solid fa-flag-checkered" style="font-size: 2rem; color: var(--accent-lime); margin-bottom: 10px; display: block;"></i>
-              Non ci sono ancora iscritti per questo evento.
-            </div>
-            <a href="iscrizione.html" class="btn btn-primary" style="display: inline-block; padding: 10px 24px; font-size: 0.95rem;">
-              <i class="fa-solid fa-bolt"></i> Puoi essere il primo, che aspetti!
-            </a>
-          </td>
-        </tr>
-      `;
+      if (isFiltering) {
+        // SCENARIO 2: Nessun risultato trovato con il filtro di ricerca
+        iscrittiList.innerHTML = `
+          <tr>
+            <td colspan="${isAdmin ? 7 : 5}" style="padding: 35px 20px; text-align: center;">
+              <div style="font-size: 1rem; color: #e0e0e0; margin-bottom: 12px;">
+                <i class="fa-solid fa-magnifying-glass" style="font-size: 1.8rem; color: #aaa; margin-bottom: 8px; display: block;"></i>
+                Nessun atleta trovato per "<strong>${escapeHtml(searchInput.value)}</strong>".
+              </div>
+              <button id="resetSearchBtn" class="btn btn-secondary" style="padding: 6px 16px; font-size: 0.85rem;">
+                Mostra tutti gli iscritti
+              </button>
+            </td>
+          </tr>
+        `;
+
+        document.getElementById('resetSearchBtn')?.addEventListener('click', () => {
+          searchInput.value = '';
+          renderTable(allData, false);
+        });
+      } else {
+        // SCENARIO 3: Il Database è realmente vuoto (0 iscritti in totale)
+        iscrittiList.innerHTML = `
+          <tr>
+            <td colspan="${isAdmin ? 7 : 5}" style="padding: 40px 20px; text-align: center;">
+              <div style="font-size: 1.1rem; margin-bottom: 15px; color: #e0e0e0;">
+                <i class="fa-solid fa-flag-checkered" style="font-size: 2rem; color: var(--accent-lime); margin-bottom: 10px; display: block;"></i>
+                Non ci sono ancora iscritti per questo evento.
+              </div>
+              <a href="iscrizione.html" class="btn btn-primary" style="display: inline-block; padding: 10px 24px; font-size: 0.95rem;">
+                <i class="fa-solid fa-bolt"></i> Puoi essere il primo, che aspetti!
+              </a>
+            </td>
+          </tr>
+        `;
+      }
       return;
     }
 
@@ -145,16 +182,19 @@ document.addEventListener('DOMContentLoaded', async () => {
   // 4. Filtro di ricerca JS in tempo reale
   searchInput.addEventListener('input', (e) => {
     const term = e.target.value.toLowerCase().trim();
+    const isFiltering = term.length > 0;
+
     const filtered = allData.filter(item => {
       const name = `${item.first_name} ${item.last_name}`.toLowerCase();
       const team = (item.team || '').toLowerCase();
       const cat = (item.category_event || '').toLowerCase();
       return name.includes(term) || team.includes(term) || cat.includes(term);
     });
-    renderTable(filtered);
+
+    renderTable(filtered, isFiltering);
   });
 
-  // Funzioni helper Admin (esposte globalmente per gli eventi inline)
+  // Funzioni helper Admin
   window.updateStatus = async (id, newStatus) => {
     const { error } = await supabaseClient
       .from('registrations')
